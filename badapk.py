@@ -2,9 +2,11 @@ import zipfile, os.path, sys, tempfile, argparse
 from elftools.elf.elffile import ELFFile
 from elftools.elf.dynamic import DynamicSection
 
+# General Scanner error that might occur during processing
 class ScanAndroidException(Exception):
   pass
 
+# If the file has detected as malformed, this exception will be thrown
 class ScanAndroidExceptionBadFile(ScanAndroidException):
   pass
 
@@ -89,6 +91,7 @@ class ScanAndroidLib(object):
                 ret.append(tag.needed)
     return "Illegal imported libraries: " + ", ".join(ret)
 
+# General exception thrown whenever a loader error has occured
 class ApkLoaderException(Exception):
   pass
 
@@ -103,7 +106,10 @@ class ApkLoader(object):
   def get_native_libraries(self):
     libraries = []
     for entry in self.apk.infolist():
+      # all native libraries are stored in the lib/ directory
       if entry.filename.endswith(".so") and entry.filename.startswith("lib/"):
+        # in the case that the zipfile has been closed for any reason, zipfile.open
+        # will be throw an RuntimeError 
         try:
           libraries.append((entry.filename, self.apk.open(entry)))
         except RuntimeError as e:
