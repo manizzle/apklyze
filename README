@@ -1,0 +1,9 @@
+Welcome to APKLyze
+Author: Murtaza Munaim <murt52@gmail.com>
+
+Instructions:
+1) run `pip install -r requirements`
+2) run `python badapk.py $YOURAPKNAME`
+
+You can use python badapk.py -h to see analysis options supported
+
