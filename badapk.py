@@ -116,7 +116,8 @@ class ApkLoader(object):
 def main():
   parser = argparse.ArgumentParser(description="APKLyze: Find problems with your APK")
   parser.add_argument("apk", help="The filename of the target APK")
-  parser.add_argument("--extra", default=False, action="store_true", help="For the Private Library check, allow APKs to allow extra libraries", required=False)
+  parser.add_argument("--extra", default=False, action="store_true",
+                      help="For the Private Library check, allow APKs to allow extra libraries", required=False)
   args = parser.parse_args()
   apk_obj = ApkLoader(args.apk)
   apk_libraries = apk_obj.get_native_libraries()
